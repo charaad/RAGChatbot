@@ -6,7 +6,7 @@ import requests
 st.set_page_config( page_title="RAG Chatbot", page_icon="🤖", layout="centered" )
 
 st.title("🤖 RAG Chatbot") 
-st.caption("Ask questions about the Economics, Astronomy, and AI documents.")
+st.caption("Ask questions about the Economics.")
 
 if "messages" not in st.session_state: st.session_state.messages = []
 
