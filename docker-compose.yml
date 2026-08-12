@@ -15,7 +15,9 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
     container_name: rag-frontend
-    depends_on:
-      - api
     ports:
       - "8501:8501"
+    environment:    
+     - API_URL=http://api:8000
+    depends_on:
+      - api

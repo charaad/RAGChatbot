@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 import requests
 
@@ -21,9 +22,10 @@ if prompt := st.chat_input("Ask a question..."):
     
    try:
 #keep last 6 messeges history in mind for context window
+        API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
 
         response = requests.post(
-            "http://127.0.0.1:8000/chat",
+            f"{API_URL}/chat",
             json={"question": prompt,
                   "history": st.session_state.messages[-6:]}
         )
