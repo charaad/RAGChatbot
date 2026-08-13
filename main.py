@@ -3,11 +3,10 @@ import os
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
-
-
-
+from pathlib import Path
 
 from dotenv import load_dotenv
+
 
 
 #load api
@@ -18,7 +17,10 @@ embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-
 
 
 #load faiss for search
-vector_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
+BASE_DIR = Path(__file__).resolve().parent
+FAISS_PATH = BASE_DIR / "faiss_index"
+
+vector_db = FAISS.load_local(str(FAISS_PATH), embeddings, allow_dangerous_deserialization=True)
 retriever = vector_db.as_retriever(search_kwargs={"k": 8})
 
 #load model
