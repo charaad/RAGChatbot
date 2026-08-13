@@ -1,12 +1,16 @@
 import os
 
 import requests
+from dotenv import load_dotenv
 
 from langchain_huggingface import HuggingFaceEmbeddings
+#from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 
+
+load_dotenv()
 
 loader = DirectoryLoader("docs", glob="*.pdf", loader_cls=PyPDFLoader)
 docs = loader.load()
