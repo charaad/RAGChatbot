@@ -17,10 +17,7 @@ embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-
 
 
 #load faiss for search
-BASE_DIR = Path(__file__).resolve().parent
-FAISS_PATH = BASE_DIR / "faiss_index"
-
-vector_db = FAISS.load_local(str(FAISS_PATH), embeddings, allow_dangerous_deserialization=True)
+vector_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
 retriever = vector_db.as_retriever(search_kwargs={"k": 8})
 
 #load model
