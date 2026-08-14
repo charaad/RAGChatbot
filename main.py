@@ -4,6 +4,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_google_genai import ChatGoogleGenerativeAI
 from pathlib import Path
+from langchain_postgres import PGVector
 
 from dotenv import load_dotenv
 
@@ -13,14 +14,26 @@ from dotenv import load_dotenv
 load_dotenv()
 
 SUPABASE_DB_URL = os.getenv("SUPABASE_DB_URL")
+if not SUPABASE_DB_URL:
+    raise ValueError("SUPABASE_DB_URL is not configured in environment variables.")
+
 
 # Load embedding model
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
 
 #load faiss for search
-vector_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
+#vector_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
+#retriever = vector_db.as_retriever(search_kwargs={"k": 8})
+
+vector_db = PGVector(
+    embeddings=embeddings,
+    collection_name="rag_documents",
+    connection=SUPABASE_DB_URL,
+    use_jsonb=True,
+)
 retriever = vector_db.as_retriever(search_kwargs={"k": 8})
+
 
 #load model
 llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite")
