@@ -11,7 +11,7 @@ def home():
     return {"message": "RAG API is running"}
 
 @app.post("/chat", response_model=QueryResponse)
-async def chat_endpoint(request: QueryRequest):
+async def chat(request: QueryRequest):
     try:
         answer, sources = rag_run(request.question, request.history)
         return QueryResponse(answer=answer, sources=sources)
