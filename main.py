@@ -12,6 +12,8 @@ from dotenv import load_dotenv
 #load api
 load_dotenv()
 
+SUPABASE_DB_URL = os.getenv("SUPABASE_DB_URL")
+
 # Load embedding model
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 

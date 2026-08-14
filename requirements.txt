@@ -14,3 +14,4 @@ psycopg[binary]
 
 pydantic
 sentence-transformers
+psycopg2-binary
