@@ -11,7 +11,9 @@ from dotenv import load_dotenv
 
 
 #load api
-load_dotenv()
+env_path = Path(".") / ".env"
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path)
 
 SUPABASE_DB_URL = os.getenv("SUPABASE_DB_URL")
 if not SUPABASE_DB_URL:
