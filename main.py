@@ -70,7 +70,7 @@ Guidelines:
    it is related to any key words the current or recent past messeges use. Do not provide answers that are unrelated to the question.
 3. Fallback Refusal: Only state "I don't have enough context to answer that accurately" if the query is completely outside the domain of the provided materials.
    Do not answer questions completely unrelated to the provided context, instead say "I don't have enough context to answer that accurately".
-4. Tone: Speak directly and naturally. Never mention "documents", "context", "provided text", or "conversation history" in your response.
+4. Tone: Speak directly and naturally. Never mention things similar to "documents", "context", "provided text", or "conversation history" in your response.
 
 
 Conversation History:
