@@ -43,7 +43,7 @@ temperature =0.5,
 top_p=0.75,
 top_k=50
 )
-
+#git fixing comment
 
 def rag_run(question: str, history: list[dict] = None) -> str:
     """Retrieves context and generates an answer using Gemini."""
