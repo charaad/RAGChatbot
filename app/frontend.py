@@ -18,8 +18,9 @@ if prompt := st.chat_input("Ask a question..."):
    with st.chat_message("user"): 
        st.markdown(prompt)
 
-   history = st.session_state.messages[-8:]
-    
+   history_payload = list(st.session_state.messages[-8:])    
+   st.session_state.messages.append({"role": "user", "content": prompt})
+
    try:
 #keep last 8 messeges history in mind for context window
        # API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")

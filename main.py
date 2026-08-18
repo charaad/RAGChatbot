@@ -50,8 +50,13 @@ def rag_run(question: str, history: list[dict] = None) -> str:
     if history is None:
         history = []
 
+    search_query = question
+    if history and len(question.split()) < 8:
+        recent_context = " ".join([m.get("content", "") for m in history[-2:]])
+        search_query = f"{recent_context} {question}"
+    
     # Retrieve relevant chunks
-    docs = retriever.invoke(question)
+    docs = retriever.invoke(search_query)
     context = "\n\n".join([doc.page_content for doc in docs])
    # sources = list(set([doc.metadata.get("source", "Unknown") for doc in docs]))
 
@@ -69,7 +74,8 @@ Guidelines:
    it is related to any key words the current or recent past messeges use. Do not provide answers that are unrelated to the question.
 3. Fallback Refusal: Only state "I don't have enough context to answer that accurately" if the query is completely outside the domain of the provided materials.
    Do not answer questions completely unrelated to the provided context, instead say "I don't have enough context to answer that accurately".
-4. Tone: Speak directly and naturally. Never mention things similar to "documents", "context", "provided text", or "conversation history" in your response.
+4. Subject Alignment: Resolve ambiguous terms like "both", "they", "these", or "it" using the Conversation History first.
+5. Tone: Speak directly and naturally. Never mention things similar to "documents", "context", "provided text", or "conversation history" in your response.
 
 
 Conversation History:
