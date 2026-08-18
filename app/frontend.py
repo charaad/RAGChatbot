@@ -28,7 +28,7 @@ if prompt := st.chat_input("Ask a question..."):
         response = requests.post(
             f"{API_URL}/chat",
             json={"question": prompt,
-                  "history": st.session_state.messages[-6:]}
+                  "history": st.session_state.messages[-8:]}
         )
 
         response.raise_for_status()
