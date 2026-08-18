@@ -39,9 +39,9 @@ retriever = vector_db.as_retriever(search_kwargs={"k": 8})
 
 #load model
 llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite",
-temperature =0.55,
+temperature =0.5,
 top_p=0.75,
-top_k=60
+top_k=50
 )
 
 
@@ -71,8 +71,7 @@ Guidelines:
 3. Fallback Refusal: Only state "I don't have enough context to answer that accurately" if the query is completely outside the domain of the provided materials.
    Do not answer questions completely unrelated to the provided context, instead say "I don't have enough context to answer that accurately".
 4. Tone: Speak directly and naturally. Never mention things similar to "documents", "context", "provided text", or "conversation history" in your response.
-5. Multi-Turn Coreference: When the user query uses pronouns or collective references (e.g., "both", "these", "they", "the former", "it"), resolve them using 
-   ALL relevant terms mentioned across the conversation history before formulating your answer.
+
 
 Conversation History:
 {history_text if history_text else "No prior history."}
