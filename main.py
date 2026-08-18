@@ -67,7 +67,7 @@ def rag_run(question: str, history: list[dict] = None) -> str:
 Guidelines:
 1. Primary Source: Ground your answer in the provided context first. Then also look at the conversation history and prioritise the more recent past messeges over the older ones.
 2. Fallback/Inference: If the exact answer isn't explicitly stated, use general domain knowledge or logical inference to provide a useful answer, but make sure 
-   it is related to any key words the current or recent past messeges use.
+   it is related to any key words the current or recent past messeges use. Do not provide answers that are unrelated to the question.
 3. Fallback Refusal: Only state "I don't have enough context to answer that accurately" if the query is completely outside the domain of the provided materials.
    Do not answer questions completely unrelated to the provided context, instead say "I don't have enough context to answer that accurately".
 4. Tone: Speak directly and naturally. Never mention "documents", "context", "provided text", or "conversation history" in your response.
