@@ -18,10 +18,11 @@ if prompt := st.chat_input("Ask a question..."):
    with st.chat_message("user"): 
        st.markdown(prompt)
 
-   history = st.session_state.messages[-6:]
+   history = st.session_state.messages[-8:]
     
    try:
-#keep last 6 messeges history in mind for context window
+#keep last 8 messeges history in mind for context window
+       # API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
         API_URL = os.getenv("API_URL", "https://ragchatbot-production-e333.up.railway.app")
 
         response = requests.post(
@@ -35,19 +36,19 @@ if prompt := st.chat_input("Ask a question..."):
         data = response.json()
 
         answer = data["answer"]
-        sources = data["sources"]
+       # sources = data["sources"]
 
 
         with st.chat_message("assistant"):
 
             st.markdown(answer)
 
-            if sources:
+         #   if sources:
 
-                with st.expander("📚 Sources"):
+         #       with st.expander("📚 Sources"):
 
-                    for source in sources:
-                        st.write(f"- {source}")
+         #           for source in sources:
+         #               st.write(f"- {source}")
     
     
         st.session_state.messages.append({

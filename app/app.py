@@ -13,8 +13,8 @@ def home():
 @app.post("/chat", response_model=QueryResponse)
 async def chat(request: QueryRequest):
     try:
-        answer, sources = rag_run(request.question, request.history)
-        return QueryResponse(answer=answer, sources=sources)
+        answer = rag_run(request.question, request.history)
+        return QueryResponse(answer=answer)
     
     except Exception as e:
         if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
