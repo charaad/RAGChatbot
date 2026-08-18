@@ -39,9 +39,9 @@ retriever = vector_db.as_retriever(search_kwargs={"k": 8})
 
 #load model
 llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite",
-temperature =0.45,
-top_p=0.8,
-top_k=70
+temperature =0.55,
+top_p=0.75,
+top_k=60
 )
 
 
@@ -56,20 +56,21 @@ def rag_run(question: str, history: list[dict] = None) -> str:
     context = "\n\n".join([doc.page_content for doc in docs])
    # sources = list(set([doc.metadata.get("source", "Unknown") for doc in docs]))
 
-    # Format historical convo data (FIXED TYPO: message instead of messege)
     history_text = "\n".join(
         f"{msg['role'].upper()}: {msg['content']}"
-        for msg in history[-6:]
+        for msg in history[-8:]
     )
 
     # Format Prompt 
-    prompt = f"""Answer the question using the provided context and ALWAYS read and account for the conversation history.
-       If no keywords are provided in current context, answer the question based previous context and conversation history. 
+    prompt = f"""You are a helpful assistant. Use the provided context and conversation history to answer the user's question.
 
-If the answer isn't clearly mentioned, look for adjacent information and attempt to answer. If no adjacent information is available, say:
-"This is not in my field of expertise."
+Guidelines:
+1. Primary Source: Ground your answer in the provided context first. Then also look at the conversation history. 
+2. Fallback/Inference: If the exact answer isn't explicitly stated, use general domain knowledge or logical inference to provide a useful answer.
+3. Fallback Refusal: Only state "I don't have enough context to answer that accurately" if the query is completely outside the domain of the provided materials.
+   Do not answer questions completely unrelated to the provided context, instead say "I don't have enough context to answer that accurately".
+4. Tone: Speak directly and naturally. Never mention "documents", "context", "provided text", or "conversation history" in your response.
 
-Do not mention the documents in the response, avoid saying "According to the documents" or similar phrases. 
 
 Conversation History:
 {history_text if history_text else "No prior history."}

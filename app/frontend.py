@@ -22,8 +22,8 @@ if prompt := st.chat_input("Ask a question..."):
     
    try:
 #keep last 8 messeges history in mind for context window
-       # API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
-        API_URL = os.getenv("API_URL", "https://ragchatbot-production-e333.up.railway.app")
+        API_URL = os.getenv("API_URL", "http://127.0.0.1:8000")
+        #API_URL = os.getenv("API_URL", "https://ragchatbot-production-e333.up.railway.app")
 
         response = requests.post(
             f"{API_URL}/chat",
